@@ -1,26 +1,21 @@
 class Solution {
 public:
-    vector<vector<int>> merge(vector<vector<int>>& arr) {
-        vector<vector<int>> ans;
+    vector<vector<int>> merge(vector<vector<int>>& nums) {
+        vector<pair<int,int>> p;
 
-sort(arr.begin(),arr.end());
-int n=arr.size();
-for(int i=0;i<n;i++){
-if(ans.empty()){
-    ans.push_back(arr[i]);
-}
-else{
-    vector<int> &v=ans.back();
-    int y=v[1];
-    if(arr[i][0]<=y){
-        v[1]=max(y,arr[i][1]);
-    }
-    else{
-        ans.push_back(arr[i]);
-    }
-}
-}
-return ans;
-
+		for(int i = 0;i<nums.size();i++) p.push_back({nums[i][0],nums[i][1]});
+		sort(p.begin(),p.end());
+		vector<vector<int>> ans = {{p[0].first,p[0].second}};
+		int j = 0;
+		for(int i = 1;i<p.size();i++){
+			if(ans[j][1]>=p[i].first) {
+				ans[j][1] = max(ans[j][1],p[i].second);
+			}
+			else{
+				ans.push_back({p[i].first,p[i].second});
+				j++;
+			}
+		}
+		return ans;
     }
 };
